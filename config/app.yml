@@ -1,0 +1,6 @@
+mysql:
+  username: root
+  password: 1314520QWer()
+  host: 127.0.0.1
+  port: 3306
+  database: ginchat # name of the database to use
