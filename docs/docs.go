@@ -67,7 +67,7 @@ const docTemplate = `{
             }
         },
         "/user/deleteUser": {
-            "get": {
+            "delete": {
                 "tags": [
                     "用户模块"
                 ],
@@ -107,7 +107,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/user/updateUser/": {
+        "/user/updateUser": {
             "post": {
                 "tags": [
                     "用户模块"
@@ -131,6 +131,18 @@ const docTemplate = `{
                         "type": "string",
                         "description": "密码",
                         "name": "password",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "邮箱",
+                        "name": "email",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "手机号",
+                        "name": "phone",
                         "in": "formData"
                     },
                     {
