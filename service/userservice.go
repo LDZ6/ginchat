@@ -1,9 +1,11 @@
 package service
 
 import (
+	"fmt"
 	"ginchat/models"
 	"strconv"
 
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 )
 
@@ -87,8 +89,15 @@ func UpdateUser(c *gin.Context) {
 		})
 	}
 	user.Password = password
-	models.UpdateUser(user)
-	c.JSON(200, gin.H{
-		"msg": "更新成功",
-	})
+	if _, err := govalidator.ValidateStruct(user); err != nil {
+		fmt.Println(err)
+		c.JSON(-1, gin.H{
+			"msg": "参数错误",
+		})
+	} else {
+		models.UpdateUser(user)
+		c.JSON(200, gin.H{
+			"msg": "更新成功",
+		})
+	}
 }
