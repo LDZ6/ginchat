@@ -67,3 +67,27 @@ func UpdateUser(user UserBasic) error {
 	}
 	return utils.DB.Model(&UserBasic{}).Where("id = ?", user.ID).Updates(&user).Error
 }
+
+func FindUserByName(name string) *UserBasic {
+	user := UserBasic{}
+	utils.DB.Where("name = ?", name).First(&user)
+	return &user
+}
+
+func FindUserByPhone(phone string) *UserBasic {
+	user := UserBasic{}
+	utils.DB.Where("phone = ?", phone).First(&user)
+	return &user
+}
+
+func FindUserByEmail(email string) *UserBasic {
+	user := UserBasic{}
+	utils.DB.Where("email = ?", email).First(&user)
+	return &user
+}
+
+func FindUserById(id uint) *UserBasic {
+	user := UserBasic{}
+	utils.DB.Where("id = ?", id).First(&user)
+	return &user
+}

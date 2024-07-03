@@ -40,11 +40,18 @@ func CreateUser(c *gin.Context) {
 			"msg": "两次密码不一致",
 		})
 	}
-	user.Password = password
-	models.CreateUser(user)
-	c.JSON(200, gin.H{
-		"msg": "创建成功",
-	})
+	data := models.FindUserByName(user.Name)
+	if data != nil {
+		c.JSON(-1, gin.H{
+			"msg": "用户名已存在",
+		})
+	} else {
+		user.Password = password
+		models.CreateUser(user)
+		c.JSON(200, gin.H{
+			"msg": "创建成功",
+		})
+	}
 }
 
 // DeleteUser
