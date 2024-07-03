@@ -17,9 +17,10 @@ type UserBasic struct {
 	Identity      string
 	ClientIp      string
 	ClientPort    string
-	LoginTime     time.Time `gorm:"default:CURRENT_TIMESTAMP"`
-	HeartbeatTime time.Time `gorm:"default:CURRENT_TIMESTAMP"`
-	LoginOutTime  time.Time `gorm:"default:CURRENT_TIMESTAMP column:login_out_time" json:"login_out_time"`
+	Salt          string
+	LoginTime     time.Time
+	HeartbeatTime time.Time
+	LoginOutTime  time.Time `json:"login_out_time"`
 	IsLogout      bool
 	DeviceInfo    string
 }
@@ -90,4 +91,10 @@ func FindUserById(id uint) *UserBasic {
 	user := UserBasic{}
 	utils.DB.Where("id = ?", id).First(&user)
 	return &user
+}
+
+func IsEmpty() bool {
+	user := UserBasic{}
+	result := utils.DB.First(&user)
+	return result.Error == gorm.ErrRecordNotFound
 }

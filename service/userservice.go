@@ -3,10 +3,12 @@ package service
 import (
 	"fmt"
 	"ginchat/models"
+	"ginchat/utils"
 	"strconv"
 
 	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
+	"golang.org/x/exp/rand"
 )
 
 // GetUserList
@@ -35,23 +37,33 @@ func CreateUser(c *gin.Context) {
 	user.Name = c.Query("name")
 	repassword := c.Query("repassword")
 	password := c.Query("password")
+	salt := fmt.Sprintf("%06d", rand.Int31())
 	if password != repassword {
 		c.JSON(-1, gin.H{
 			"msg": "两次密码不一致",
 		})
+		return
+	}
+	if user.Name == "" || password == "" {
+		c.JSON(-1, gin.H{
+			"msg": "用户名或密码不能为空",
+		})
+		return
 	}
 	data := models.FindUserByName(user.Name)
-	if data != nil {
-		c.JSON(-1, gin.H{
-			"msg": "用户名已存在",
-		})
-	} else {
-		user.Password = password
-		models.CreateUser(user)
-		c.JSON(200, gin.H{
-			"msg": "创建成功",
-		})
+	if !models.IsEmpty() {
+		if data != nil {
+			c.JSON(-1, gin.H{
+				"msg": "用户名已存在",
+			})
+			return
+		}
 	}
+	user.Password = utils.MakePassword(password, salt)
+	models.CreateUser(user)
+	c.JSON(200, gin.H{
+		"msg": "创建成功",
+	})
 }
 
 // DeleteUser

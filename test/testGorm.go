@@ -2,6 +2,7 @@ package main
 
 import (
 	"ginchat/models"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -13,12 +14,14 @@ func main() {
 		panic(err)
 	}
 	db.AutoMigrate(&models.UserBasic{})
-	user := models.UserBasic{}
-	user.Name = "test"
-	db.Create(&user)
-	sqlDB, err := db.DB()
-	if err != nil {
-		panic(err)
-	}
-	defer sqlDB.Close()
+	// user := models.UserBasic{}
+	// user.Name = "test"
+	// db.Create(&user)
+	// sqlDB, err := db.DB()
+	//
+	//	if err != nil {
+	//		panic(err)
+	//	}
+	//
+	// defer sqlDB.Close()
 }
