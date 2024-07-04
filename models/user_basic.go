@@ -98,3 +98,9 @@ func IsEmpty() bool {
 	result := utils.DB.First(&user)
 	return result.Error == gorm.ErrRecordNotFound
 }
+
+func FindUserByNameAndPassword(name, password string) *UserBasic {
+	user := UserBasic{}
+	utils.DB.Where("name = ? AND password = ?", name, password).First(&user)
+	return &user
+}

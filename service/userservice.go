@@ -60,6 +60,7 @@ func CreateUser(c *gin.Context) {
 		}
 	}
 	user.Password = utils.MakePassword(password, salt)
+	user.Salt = salt
 	models.CreateUser(user)
 	c.JSON(200, gin.H{
 		"msg": "创建成功",
@@ -117,6 +118,34 @@ func UpdateUser(c *gin.Context) {
 		models.UpdateUser(user)
 		c.JSON(200, gin.H{
 			"msg": "更新成功",
+		})
+	}
+}
+
+// Login
+// @Summary 登录
+// @Tags 用户模块
+// @Param name formData string true "用户名"
+// @Param password formData string true "密码"
+// @Success 200 {string} json {"code": "msg"}
+// @Router /user/login [post]
+func Login(c *gin.Context) {
+	name := c.PostForm("name")
+	password := c.PostForm("password")
+	user := models.FindUserByName(name)
+	if user == nil {
+		c.JSON(-1, gin.H{
+			"msg": "用户名不存在",
+		})
+		return
+	}
+	if utils.ValidPassword(password, user.Salt, user.Password) {
+		c.JSON(200, gin.H{
+			"msg": "登录成功",
+		})
+	} else {
+		c.JSON(-1, gin.H{
+			"msg": "密码错误",
 		})
 	}
 }
