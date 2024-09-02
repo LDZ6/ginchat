@@ -1,3 +1,23 @@
+<<<<<<< HEAD
+$ git config --global user.name "runoob"
+$ git config --global user.email test@runoob.com
+git init
+git add *.c
+git add README
+git commit -m '初始化项目版本
+git push
+git clone <repo> <directory>
+
+git pull origin main --allow-unrelated-histories
+git status
+git remote add orgin master
+git branch
+git branch dev
+git checkout dev
+git log --oneline
+git log
+git merge
+=======
 ## Git 使用详解
 
 ### 添加和提交文件
@@ -176,3 +196,4 @@ git push
 之后A进行pull,是B解决冲突后的提交，因为B在处理冲突时已经合并了A的更改。
 
 这些步骤可以帮助团队有效地进行协作开发，确保代码的同步和质量。
+>>>>>>> d73b0f9063879ec23face7113d7289d2fe883647
