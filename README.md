@@ -1,3 +1,3 @@
 # ginchat
-一个IM即时通讯系统.
+一个IM即时asdfasdfasdf通讯系统.asdfasdf
 
